@@ -116,7 +116,11 @@ public class ManifestAttributesChecker {
 
             if (attributesCheck.contains(MANIFEST_ATTRIBUTES_CHECK.PERMISSIONS) ||
                     attributesCheck.contains(MANIFEST_ATTRIBUTES_CHECK.ALL)) {
-                checkPermissionsAttribute();
+                if (file.getResources().getJARs().length > 0) {
+                	checkPermissionsAttribute();
+                } else {
+                	LOG.debug("check permissions on {} skipped because it contains no jars.", file.getFileLocation());
+                }
             } else {
                 LOG.warn("check on {} skipped because property of deployment.manifest.attributes.check was not set to ALL or includes {} in the combination of options", "Permissions", "PERMISSIONS");
             }
